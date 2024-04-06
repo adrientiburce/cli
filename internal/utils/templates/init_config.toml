@@ -119,6 +119,19 @@ template = "Your code is {{ `{{ .Code }}` }} ."
 # enabled = true
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
+# Use a custom sms sender
+[auth.hook.send_sms]
+# enabled = true
+# uri = "http://<database>/<schema>/<hook_name>"
+# TODO: Determine how to fill this
+# secret = "v1,"
+
+## Use a custom email sender
+[auth.hook.send_email]
+# enabled = true
+# uri = "http://<database>/<schema>/<hook_name>"
+# TODO: Determine how to fill this
+# secret = "v1,"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]
