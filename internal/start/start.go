@@ -516,6 +516,22 @@ EOF
 			)
 		}
 
+		if utils.Config.Auth.Hook.SendSMS.Enabled {
+			env = append(
+				env,
+				"GOTRUE_HOOK_SEND_SMS_ENABLED=true",
+				"GOTRUE_HOOK_SEND_SMS_URI="+utils.Config.Auth.Hook.SendSMS.URI,
+			)
+		}
+
+		if utils.Config.Auth.Hook.SendEmail.Enabled {
+			env = append(
+				env,
+				"GOTRUE_HOOK_SEND_EMAIL_ENABLED=true",
+				"GOTRUE_HOOK_SEND_Email_URI="+utils.Config.Auth.Hook.SendEmail.URI,
+			)
+		}
+
 		for name, config := range utils.Config.Auth.External {
 			env = append(
 				env,

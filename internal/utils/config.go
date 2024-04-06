@@ -357,11 +357,14 @@ type (
 		MFAVerificationAttempt      hookConfig `toml:"mfa_verification_attempt"`
 		PasswordVerificationAttempt hookConfig `toml:"password_verification_attempt"`
 		CustomAccessToken           hookConfig `toml:"custom_access_token"`
+		SendSMS                     hookConfig `toml:"send_sms"`
+		SendEmail                   hookConfig `toml:"send_email"`
 	}
 
 	hookConfig struct {
-		Enabled bool   `toml:"enabled"`
-		URI     string `toml:"uri"`
+		Enabled         bool   `toml:"enabled"`
+		URI             string `toml:"uri"`
+		HTTPHookSecrets string `toml:"secrets"`
 	}
 
 	twilioConfig struct {
@@ -671,6 +674,23 @@ func LoadConfigFS(fsys afero.Fs) error {
 			if Config.Auth.Hook.CustomAccessToken.Enabled {
 				if Config.Auth.Hook.CustomAccessToken.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.custom_access_token.uri")
+				}
+			}
+
+			if Config.Auth.Hook.SendSMS.Enabled {
+				if Config.Auth.Hook.SendSMS.URI == "" {
+					return errors.New("Missing required field in config: auth.hook.send_sms.uri")
+				}
+				if !strings.HasPrefix(Config.Auth.Hook.SendSMS, "http") {
+					return errors.New("Invalid HTTP hook config: auth.hook.send_sms.uri should be a http or https URL")
+				}
+			}
+			if Config.Auth.Hook.SendEmail.Enabled {
+				if Config.Auth.Hook.SendSMS.URI == "" {
+					return errors.New("Missing required field in config: auth.hook.custom_access_token.uri")
+				}
+				if !strings.HasPrefix(Config.Auth.Hook.SendSMS, "http") {
+					return errors.New("Invalid HTTP hook config: auth.hook.send_email.uri should be a http or https URL")
 				}
 			}
 
