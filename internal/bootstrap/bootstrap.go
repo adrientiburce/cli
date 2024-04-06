@@ -119,11 +119,10 @@ func Run(ctx context.Context, templateUrl string, fsys afero.Fs, options ...func
 	}, policy, newErrorCallback()); err != nil {
 		return err
 	}
-	utils.CmdSuggestion = suggestAppStart(utils.CurrentDirAbs)
 	return nil
 }
 
-func suggestAppStart(cwd string) string {
+func SuggestAppStart(cwd, start string) string {
 	logger := utils.GetDebugLogger()
 	workdir, err := os.Getwd()
 	if err != nil {
@@ -137,7 +136,7 @@ func suggestAppStart(cwd string) string {
 	if len(workdir) > 0 && workdir != "." {
 		cmd = append(cmd, "cd "+workdir)
 	}
-	cmd = append(cmd, "npm ci", "npm run dev")
+	cmd = append(cmd, start)
 	suggestion := "To start your app:"
 	for _, c := range cmd {
 		suggestion += fmt.Sprintf("\n  %s", utils.Aqua(c))
@@ -311,6 +310,7 @@ type StarterTemplate struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Url         string `json:"url"`
+	Start       string `json:"start"`
 }
 
 func ListSamples(ctx context.Context, client *github.Client) ([]StarterTemplate, error) {
