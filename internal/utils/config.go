@@ -4,6 +4,7 @@ import (
 	"bytes"
 	_ "embed"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -681,8 +682,8 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if Config.Auth.Hook.SendSMS.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.send_sms.uri")
 				}
-				if !strings.HasPrefix(strings.ToLower(Config.Auth.Hook.SendSMS.URI), "http") {
-					return errors.New("Invalid HTTP hook config: auth.hook.send_sms.uri should be a HTTP or HTTPS URL")
+				if validateHTTPHookURI(Config.Auth.Hook.SendSMS.URI, "send_sms"); err != nil {
+					return err
 				}
 				if Config.Auth.Hook.SendSMS.HTTPHookSecrets == "" {
 					return errors.New("Missing required field in config: auth.hook.send_sms.secrets")
@@ -692,8 +693,8 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if Config.Auth.Hook.SendEmail.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.send_email.uri")
 				}
-				if !strings.HasPrefix(strings.ToLower(Config.Auth.Hook.SendEmail.URI), "http") {
-					return errors.New("Invalid HTTP hook config: auth.hook.send_email.uri should be a HTTP or HTTPS URL")
+				if validateHTTPHookURI(Config.Auth.Hook.SendEmail.URI, "send_email"); err != nil {
+					return err
 				}
 				if Config.Auth.Hook.SendEmail.HTTPHookSecrets == "" {
 					return errors.New("Missing required field in config: auth.hook.send_email.secrets")
@@ -830,4 +831,15 @@ func RemoveDuplicates(slice []string) (result []string) {
 		}
 	}
 	return result
+}
+
+func validateHTTPHookURI(uri, hookName string) error {
+	parsed, err := url.Parse(uri)
+	if err != nil {
+		return errors.Errorf("failed to parse template url: %w", err)
+	}
+	if !(parsed.Scheme == "http" || parsed.Scheme == "https") {
+		return errors.Errorf("Invalid HTTP hook config: auth.hook.%v should be a HTTP or HTTPS URL", hookName)
+	}
+	return nil
 }
