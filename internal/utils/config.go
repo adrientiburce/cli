@@ -693,7 +693,7 @@ func LoadConfigFS(fsys afero.Fs) error {
 					return errors.New("Missing required field in config: auth.hook.send_email.uri")
 				}
 				if !strings.HasPrefix(strings.ToLower(Config.Auth.Hook.SendEmail.URI), "http") {
-					return errors.New("Invalid HTTP hook config: auth.hook.send_email.uri should be a http or https URL")
+					return errors.New("Invalid HTTP hook config: auth.hook.send_email.uri should be a HTTP or HTTPS URL")
 				}
 				if Config.Auth.Hook.SendEmail.HTTPHookSecrets == "" {
 					return errors.New("Missing required field in config: auth.hook.send_email.secrets")
