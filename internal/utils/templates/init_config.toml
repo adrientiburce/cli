@@ -122,6 +122,7 @@ template = "Your code is {{ `{{ .Code }}` }} ."
 # Use a custom sms sender
 [auth.hook.send_sms]
 # enabled = true
+# We use host.docker.internal to connect to port 54321 on the host. See: https://docs.docker.com/desktop/networking/
 # uri = "http://host.docker.internal:54321/functions/v1/sms_sender"
 # Use this secret in the email_sender edge function as well.
 # secrets = "v1,whsec_c3VwYWJhc2Vpc3Zlcnlhd2Vzb21lYW5kaWxpa2VpdA=="
