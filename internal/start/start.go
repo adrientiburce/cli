@@ -521,6 +521,7 @@ EOF
 				env,
 				"GOTRUE_HOOK_SEND_SMS_ENABLED=true",
 				"GOTRUE_HOOK_SEND_SMS_URI="+utils.Config.Auth.Hook.SendSMS.URI,
+				"GOTRUE_HOOK_SEND_SMS_SECRETS="+utils.Config.Auth.Hook.SendSMS.HTTPHookSecrets,
 			)
 		}
 
@@ -528,7 +529,8 @@ EOF
 			env = append(
 				env,
 				"GOTRUE_HOOK_SEND_EMAIL_ENABLED=true",
-				"GOTRUE_HOOK_SEND_Email_URI="+utils.Config.Auth.Hook.SendEmail.URI,
+				"GOTRUE_HOOK_SEND_EMAIL_URI="+utils.Config.Auth.Hook.SendEmail.URI,
+				"GOTRUE_HOOK_SEND_EMAIL_SECRETS="+utils.Config.Auth.Hook.SendEmail.HTTPHookSecrets,
 			)
 		}
 

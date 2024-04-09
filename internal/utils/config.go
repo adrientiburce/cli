@@ -681,16 +681,22 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if Config.Auth.Hook.SendSMS.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.send_sms.uri")
 				}
-				if !strings.HasPrefix(Config.Auth.Hook.SendSMS.URI, "http") {
-					return errors.New("Invalid HTTP hook config: auth.hook.send_sms.uri should be a http or https URL")
+				if !strings.HasPrefix(strings.ToLower(Config.Auth.Hook.SendSMS.URI), "http") {
+					return errors.New("Invalid HTTP hook config: auth.hook.send_sms.uri should be a HTTP or HTTPS URL")
+				}
+				if Config.Auth.Hook.SendSMS.HTTPHookSecrets == "" {
+					return errors.New("Missing required field in config: auth.hook.send_sms.secrets")
 				}
 			}
 			if Config.Auth.Hook.SendEmail.Enabled {
 				if Config.Auth.Hook.SendEmail.URI == "" {
-					return errors.New("Missing required field in config: auth.hook.custom_access_token.uri")
+					return errors.New("Missing required field in config: auth.hook.send_email.uri")
 				}
-				if !strings.HasPrefix(Config.Auth.Hook.SendEmail.URI, "http") {
+				if !strings.HasPrefix(strings.ToLower(Config.Auth.Hook.SendEmail.URI), "http") {
 					return errors.New("Invalid HTTP hook config: auth.hook.send_email.uri should be a http or https URL")
+				}
+				if Config.Auth.Hook.SendSMS.HTTPHookSecrets == "" {
+					return errors.New("Missing required field in config: auth.hook.send_email.secrets")
 				}
 			}
 
