@@ -122,16 +122,16 @@ template = "Your code is {{ `{{ .Code }}` }} ."
 # Use a custom sms sender
 [auth.hook.send_sms]
 # enabled = true
-# uri = "http://<database>/<schema>/<hook_name>"
-# TODO: Determine how to fill this
-# secret = "v1,"
+# uri = "http://host.docker.internal:54321/functions/v1/sms_sender"
+# Use this secret in the email_sender edge function as well.
+# secrets = "v1,whsec_c3VwYWJhc2Vpc3Zlcnlhd2Vzb21lYW5kaWxpa2VpdA=="
 
 ## Use a custom email sender
 [auth.hook.send_email]
 # enabled = true
-# uri = "http://<database>/<schema>/<hook_name>"
-# TODO: Determine how to fill this
-# secret = "v1,"
+# uri = "http://host.docker.internal:54321/functions/v1/email_sender"
+# Use this secret in the email_sender edge function as well.
+# secrets = "v1,whsec_aWxpa2VzdXBhYmFzZXZlcnltdWNoYW5kaWhvcGV5b3Vkb3Rvbw=="
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
 [auth.sms.twilio]
