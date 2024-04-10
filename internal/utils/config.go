@@ -682,7 +682,7 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if Config.Auth.Hook.SendSMS.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.send_sms.uri")
 				}
-				if validateHTTPHookURI(Config.Auth.Hook.SendSMS.URI, "send_sms"); err != nil {
+				if err := validateHTTPHookURI(Config.Auth.Hook.SendSMS.URI, "send_sms"); err != nil {
 					return err
 				}
 				if Config.Auth.Hook.SendSMS.HTTPHookSecrets == "" {
@@ -693,7 +693,7 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if Config.Auth.Hook.SendEmail.URI == "" {
 					return errors.New("Missing required field in config: auth.hook.send_email.uri")
 				}
-				if validateHTTPHookURI(Config.Auth.Hook.SendEmail.URI, "send_email"); err != nil {
+				if err := validateHTTPHookURI(Config.Auth.Hook.SendEmail.URI, "send_email"); err != nil {
 					return err
 				}
 				if Config.Auth.Hook.SendEmail.HTTPHookSecrets == "" {
