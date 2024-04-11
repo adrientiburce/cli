@@ -685,7 +685,7 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if err := validateHTTPHookURI(Config.Auth.Hook.SendSMS.URI, "send_sms"); err != nil {
 					return err
 				}
-				if Config.Auth.Hook.SendSMS.HTTPHookSecrets, err := maybeLoadEnv(Config.Auth.Hook.SendSMS.HTTPHookSecrets); err != nil {
+				if Config.Auth.Hook.SendSMS.HTTPHookSecrets, err = maybeLoadEnv(Config.Auth.Hook.SendSMS.HTTPHookSecrets); err != nil {
 					return errors.New("Missing required field in config: auth.hook.send_sms.secrets")
 				}
 			}
@@ -696,7 +696,7 @@ func LoadConfigFS(fsys afero.Fs) error {
 				if err := validateHTTPHookURI(Config.Auth.Hook.SendEmail.URI, "send_email"); err != nil {
 					return err
 				}
-				if Config.Auth.Hook.SendEmail.HTTPHookSecrets, err := maybeLoadEnv(Config.Auth.Hook.SendEmail.HTTPHookSecrets); err != nil {
+				if Config.Auth.Hook.SendEmail.HTTPHookSecrets, err = maybeLoadEnv(Config.Auth.Hook.SendEmail.HTTPHookSecrets); err != nil {
 					return errors.New("Missing required field in config: auth.hook.send_email.secrets")
 				}
 			}
